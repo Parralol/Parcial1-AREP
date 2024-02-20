@@ -4,19 +4,13 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.net.HttpURLConnection;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.URL;
-import java.util.ArrayList;
 import java.util.Arrays;
 
-public class HttpServer {
+public class Compute {
     
-    private static final String USER_AGENT = "Mozilla/5.0";
-    private static final String GET_URL = "https://localhost:4500/query?";
     public static void main(String[] args) throws IOException {
         ServerSocket serverSocket = null;
         String query ="";
@@ -24,7 +18,7 @@ public class HttpServer {
         String path = "";
         String[] decom = {};
         try {
-            serverSocket = new ServerSocket(4200);
+            serverSocket = new ServerSocket(35000);
         } catch (IOException e) {
             System.err.println("Could not listen on port: 4200");
             System.exit(1);
@@ -65,6 +59,11 @@ public class HttpServer {
             outputLine= "";
             System.out.println(Arrays.toString(decom));
             if(method.equals("GET")){
+                String res = Double.toString((Double)manageQuery(query));
+                System.out.println(res);
+                outputLine = html(res);
+            }else{
+                outputLine = (String) manageQuery(query);
                 System.out.println(outputLine);
                 outputLine ="HTTP/1.1 200 OK\r\n"+
                 "<!DOCTYPE html>\r\n" + //
@@ -194,11 +193,4 @@ public class HttpServer {
 
         return xd;
     }
-    public String response(){
-
-       
-        return "";
-    }
-        
 }
-
