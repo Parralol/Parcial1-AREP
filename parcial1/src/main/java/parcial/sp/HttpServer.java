@@ -16,7 +16,7 @@ import java.util.Arrays;
 public class HttpServer {
     
     private static final String USER_AGENT = "Mozilla/5.0";
-    private static final String GET_URL = "https://localhost:4500/query?";
+    private static final String GET_URL = "https://localhost:35000/query?";
     public static void main(String[] args) throws IOException {
         ServerSocket serverSocket = null;
         String query ="";
@@ -39,13 +39,16 @@ public class HttpServer {
                 System.err.println("Accept failed.");
                 System.exit(1);
             }
-
             PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
             BufferedReader in = new BufferedReader(
                     new InputStreamReader(
                             clientSocket.getInputStream()));
             String inputLine, outputLine;
             boolean firstline = true;
+
+            
+
+            
             while((inputLine=in.readLine())!=null){
                 System.out.println(inputLine);
                 if(firstline){
@@ -62,6 +65,20 @@ public class HttpServer {
                 }
                 if(!in.ready())break;
             }
+
+            URL obj = new URL(GET_URL);
+            HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+            con.setRequestMethod("GET");
+            con.setRequestProperty("User-Agent", USER_AGENT+"computar="+query);
+            
+            //The following invocation perform the connection implicitly before getting the code
+            int responseCode = con.getResponseCode();
+            System.out.println("GET Response Code :: " + responseCode);
+            StringBuffer response = new StringBuffer();
+            while ((inputLine = in.readLine()) != null) {
+                response.append(inputLine);
+            }
+            System.out.println(response.toString());
             outputLine= "";
             System.out.println(Arrays.toString(decom));
             if(method.equals("GET")){
