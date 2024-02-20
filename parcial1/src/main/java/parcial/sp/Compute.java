@@ -190,7 +190,6 @@ public class Compute {
                 "        </script>\r\n" + //
                 "    </body>\r\n" + //
                 "</html>"+ res;
-
         return xd;
     }
 }
