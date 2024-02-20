@@ -4,8 +4,12 @@
 
 
 ### Como ejecutar
-
-
+  dentro de la carpeta ejecutar:
+  desde IDE solo preionar ejecutar a cada clase
+  
+  > mvn exec:java -Dexec.mainClass="parcial.sp.Compute"
+  > mvn exec:java -Dexec.mainClass="parcial.sp.HttpServer"
+>
 ### Como usar
 
 iniciar ambos servidores
